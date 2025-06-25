@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.js": "/static/js/main.c7127180.js",
+    "static/js/164.f3968178.js": "/static/js/164.f3968178.js",
+    "static/media/logo.png": "/static/media/logo.3388874fdb954ec9d959.png",
+    "static/media/Ionicons.ttf": "/static/media/Ionicons.9b6b1954a5eb6efeaf11.ttf",
+    "static/media/product4.jpeg": "/static/media/product4.457443c32b1dbb6f01b0.jpeg",
+    "static/media/product7.jpeg": "/static/media/product7.30f3b97a13ce72d41029.jpeg",
+    "static/media/product1.jpeg": "/static/media/product1.8f313219f47403141766.jpeg",
+    "static/media/product8.jpeg": "/static/media/product8.365c9febd3edfc92954e.jpeg",
+    "static/media/product3.jpeg": "/static/media/product3.ab1b89f224181866b883.jpeg",
+    "static/media/product5.jpeg": "/static/media/product5.ab1b89f224181866b883.jpeg",
+    "static/media/product6.jpeg": "/static/media/product6.4887d615a08d37a6378d.jpeg",
+    "favicon.ico": "/favicon.ico",
+    "static/media/product2.jpeg": "/static/media/product2.cd5028b40bc360eb618e.jpeg",
+    "index.html": "/index.html",
+    "favicon-32.png": "/favicon-32.png",
+    "manifest.json": "/manifest.json",
+    "favicon-16.png": "/favicon-16.png",
+    "serve.json": "/serve.json",
+    "main.c7127180.js.map": "/static/js/main.c7127180.js.map",
+    "164.f3968178.js.map": "/static/js/164.f3968178.js.map"
+  },
+  "entrypoints": [
+    "static/js/164.f3968178.js",
+    "static/js/main.c7127180.js"
+  ]
+}

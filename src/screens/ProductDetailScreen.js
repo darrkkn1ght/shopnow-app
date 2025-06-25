@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -25,11 +25,13 @@ import GlobalStyles, {
   PlatformStyles,
   EnhancedStyles,
 } from '../styles/GlobalStyles';
+import { useCart } from '../context/CartContext';
 
 const { width, height } = Dimensions.get('window');
 
 const ProductDetailScreen = ({ route, navigation }) => {
   const { product } = route.params;
+  const { addToCart, updateQuantity, getItemQuantity } = useCart();
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -49,6 +51,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
     : 0;
 
   const handleAddToCart = () => {
+    addToCart(product, quantity);
     Alert.alert(
       'Added to Cart',
       `${quantity} x ${product.name} added to your cart!`,
@@ -81,7 +84,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
           setSelectedImageIndex(index);
         }}
       >
-        {productImages.map((image, index) => (
+        {(productImages || []).map((image, index) => (
           <View key={index} style={styles.imageContainer}>
             <Image source={image} style={styles.productImage} resizeMode="cover" />
             {discountPercentage > 0 && index === 0 && (
@@ -95,7 +98,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
       
       {/* Image Indicators */}
       <View style={styles.imageIndicators}>
-        {productImages.map((_, index) => (
+        {(productImages || []).map((_, index) => (
           <View
             key={index}
             style={[
@@ -153,7 +156,7 @@ const ProductDetailScreen = ({ route, navigation }) => {
       {product.features && (
         <View style={styles.featuresContainer}>
           <Text style={styles.sectionTitle}>Key Features</Text>
-          {product.features.map((feature, index) => (
+          {((product && product.features) || []).map((feature, index) => (
             <View key={index} style={styles.featureItem}>
               <Ionicons name="checkmark-circle" size={16} color="#007AFF" />
               <Text style={styles.featureText}>{feature}</Text>
@@ -222,6 +225,12 @@ const ProductDetailScreen = ({ route, navigation }) => {
       </TouchableOpacity>
     </View>
   );
+
+  // Optionally, set initial quantity to what's in cart
+  useEffect(() => {
+    const cartQty = getItemQuantity(product.id);
+    if (cartQty > 0) setQuantity(cartQty);
+  }, [product.id, getItemQuantity]);
 
   return (
     <SafeAreaView style={styles.container}>

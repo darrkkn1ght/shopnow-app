@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import ProductCard from '../components/ProductCard';
-import { products } from '../data/products';
+import products from '../data/products';
 import GlobalStyles, {
   Colors,
   Typography,
@@ -25,15 +25,17 @@ import GlobalStyles, {
   PlatformStyles,
   EnhancedStyles,
 } from '../styles/GlobalStyles';
+import { useCart } from '../context/CartContext';
 
 const ProductListScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [filteredProducts, setFilteredProducts] = useState(products);
-  const [cartCount, setCartCount] = useState(0);
+
+  const { addToCart, getCartItemCount } = useCart();
 
   // Extract unique categories from products
-  const categories = ['All', ...new Set(products.map(product => product.category))];
+  const categories = ['All', ...new Set((products || []).map(product => product.category))];
 
   // Filter products based on search query and selected category
   useEffect(() => {
@@ -60,7 +62,7 @@ const ProductListScreen = ({ navigation }) => {
   };
 
   const handleAddToCart = (product) => {
-    setCartCount(prev => prev + 1);
+    addToCart(product, 1);
     Alert.alert(
       'Added to Cart',
       `${product.name} has been added to your cart!`,
@@ -81,6 +83,8 @@ const ProductListScreen = ({ navigation }) => {
     </View>
   );
 
+  const cartCount = getCartItemCount();
+
   const renderHeader = () => (
     <View style={styles.header}>
       <View style={styles.headerTop}>
@@ -95,7 +99,7 @@ const ProductListScreen = ({ navigation }) => {
           <Ionicons name="bag-outline" size={24} color="#1A1A1A" />
           {cartCount > 0 && (
             <View style={styles.cartBadge}>
-              <Text style={styles.cartBadgeText}>{cartCount}</Text>
+              <Text style={styles.cartBadgeText}>{cartCount > 99 ? '99+' : cartCount}</Text>
             </View>
           )}
         </TouchableOpacity>
@@ -128,7 +132,7 @@ const ProductListScreen = ({ navigation }) => {
         style={styles.categoryContainer}
         contentContainerStyle={styles.categoryContent}
       >
-        {categories.map((category) => (
+        {(categories || []).map((category) => (
           <TouchableOpacity
             key={category}
             style={[
@@ -150,7 +154,7 @@ const ProductListScreen = ({ navigation }) => {
       {/* Results Info */}
       <View style={styles.resultsInfo}>
         <Text style={styles.resultsText}>
-          {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''} found
+          {(filteredProducts ? filteredProducts.length : 0)} product{filteredProducts && filteredProducts.length !== 1 ? 's' : ''} found
         </Text>
         <TouchableOpacity style={styles.filterButton}>
           <Ionicons name="options-outline" size={18} color="#666" />
@@ -165,7 +169,7 @@ const ProductListScreen = ({ navigation }) => {
       <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
       
       <FlatList
-        data={filteredProducts}
+        data={filteredProducts || []}
         renderItem={renderProductCard}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}

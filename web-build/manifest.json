@@ -1,0 +1,22 @@
+{
+  "background_color": "#007AFF",
+  "description": "ShopNow - Professional mobile shopping app built with React Native and Expo",
+  "display": "standalone",
+  "lang": "en",
+  "name": "ShopNow",
+  "short_name": "ShopNow",
+  "start_url": "/?utm_source=web_app_manifest",
+  "orientation": "portrait",
+  "related_applications": [
+    {
+      "platform": "itunes",
+      "id": "com.shopnow.mobileapp"
+    },
+    {
+      "platform": "play",
+      "url": "http://play.google.com/store/apps/details?id=com.shopnow.mobileapp",
+      "id": "com.shopnow.mobileapp"
+    }
+  ],
+  "prefer_related_applications": true
+}
